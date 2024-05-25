@@ -1,6 +1,6 @@
-import { useAuthContext } from "../../context/AuthContext";
+import { useAuthContext } from "../../context/AuthContext.jsx";
 import { extractTime } from "../../utils/extractTime";
-import useConversation from "../../zustand/useConversation";
+import useConversation from "../../zustand/useConversation.js";
 
 const Message = ({ message }) => {
 	const { authUser } = useAuthContext();
@@ -8,7 +8,7 @@ const Message = ({ message }) => {
 	const fromMe = message.senderId === authUser._id;
 	const formattedTime = extractTime(message.createdAt);
 	const chatClassName = fromMe ? "chat-end" : "chat-start";
-	const profilePic = fromMe ? authUser.profilePic : selectedConversation?.profilePic;
+	const profilePic = fromMe ? authUser.profilepic : selectedConversation?.profilePic;
 	const bubbleBgColor = fromMe ? "bg-blue-500" : "";
 
 	const shakeClass = message.shouldShake ? "shake" : "";

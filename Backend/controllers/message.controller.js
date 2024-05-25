@@ -1,5 +1,6 @@
 import Conversation from "../models/converstaion.model.js";
 import Message from "../models/message.model.js";
+import { getReceiverSocketId ,io} from "../socket/socket.js";
 
 export const sendMessage =async (req,res)=>{
     console.log("message sent" , req.params.id);
@@ -33,6 +34,10 @@ export const sendMessage =async (req,res)=>{
         converstaion.messages.push(newMessage._id);
         await converstaion.save();
 
+      const receiverSocketId=getReceiverSocketId(receiverId);
+      if(receiverSocketId){
+        io.to(receiverSocketId).emit("newMessage",newMessage);
+      }
         
         res.status(201).json(newMessage)
         
